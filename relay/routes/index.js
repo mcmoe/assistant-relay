@@ -12,8 +12,12 @@ const router = express.Router();
 
 
 router.get('/', function(req, res) {
-  console.log("Get All")
+  console.log("Get All");
   res.sendFile(path.join(__dirname, '../views', 'index.html'));
+ });
+
+router.get('/auth/callback', function(req, res) {
+  res.status(200).json(req.query);
  });
 
 router.post('/assistant', async(req, res) => {
