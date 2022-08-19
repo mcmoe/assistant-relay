@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const path = require('path');
 const fs = require('fs');
 const parseRange = require('range-parser');
@@ -122,7 +123,11 @@ router.post('/getResponses', async(req, res) => {
 })
 
 router.get('/audio', async(req, res) => {
-  res.sendFile(path.resolve(__dirname, `../bin/audio-responses/${req.query.v}.wav`));
+    res.sendFile(path.resolve(__dirname, `../bin/audio-responses/${req.query.v}.wav`), (err) => {
+      if(err) {
+        res.status(err.statusCode).send(createError(err.statusCode));
+      }
+    });
 });
 
 router.get('/html', async(req, res) => {
