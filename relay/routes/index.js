@@ -7,6 +7,7 @@ const path = require('path');
 const adapter = new FileSync('./bin/config.json');
 const {sendTextInput} = require('../helpers/assistant.js');
 const {outputFileStream, isQuietHour, updateResponses, saveHTMLFile} = require('../helpers/server.js');
+const chalk = require('chalk');
 
 const router = express.Router();
 
@@ -85,6 +86,7 @@ router.post('/assistant', async(req, res) => {
     }
 
 
+    console.log(chalk.magentaBright.bold(`final command for user "${user}" is: "${command}"`));
     const conversation = await sendTextInput(command, user);
     conversation
         .on('audio-data',async(data) => {
